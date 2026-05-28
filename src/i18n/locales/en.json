@@ -118,7 +118,8 @@
     "usage_stats": "Usage Statistics",
     "config_management": "Config Panel",
     "logs": "Logs Viewer",
-    "system_info": "Management Center Info"
+    "system_info": "Management Center Info",
+    "user_management": "User Management"
   },
   "dashboard": {
     "title": "Dashboard",

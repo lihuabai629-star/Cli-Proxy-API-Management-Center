@@ -118,7 +118,8 @@
     "usage_stats": "使用统计",
     "config_management": "配置面板",
     "logs": "日志查看",
-    "system_info": "中心信息"
+    "system_info": "中心信息",
+    "user_management": "用户管理"
   },
   "dashboard": {
     "title": "仪表盘",
@@ -642,7 +643,7 @@
     "plan_max20": "Max 20x"
   },
   "codex_quota": {
-    "title": "Codex 额度",
+    "title": "Codex",
     "empty_title": "暂无 Codex 认证",
     "empty_desc": "上传 Codex 认证文件后即可查看额度。",
     "idle": "点击此处刷新额度",
