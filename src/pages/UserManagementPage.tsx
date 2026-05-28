@@ -170,7 +170,6 @@ function QuotaCell({
   limit,
   remaining,
   used,
-  usedPercent,
   resetAt,
   unlimited,
 }: {
@@ -178,7 +177,6 @@ function QuotaCell({
   limit: unknown;
   remaining: unknown;
   used: unknown;
-  usedPercent?: unknown;
   resetAt: unknown;
   unlimited?: boolean | null;
 }) {
@@ -186,17 +184,14 @@ function QuotaCell({
     return <span className={styles.mainValue}>不限额</span>;
   }
 
-  const explicitUsedPercent = clampPercent(toNumber(usedPercent));
-  const remainingPercent =
-    explicitUsedPercent === null ? calculateRemainingPercent(remaining, limit) : clampPercent(100 - explicitUsedPercent);
-  const calculatedUsedPercent =
-    explicitUsedPercent ??
-    (remainingPercent === null ? calculateUsedPercent(used, limit) : clampPercent(100 - remainingPercent));
+  const remainingPercent = calculateRemainingPercent(remaining, limit);
+  const usedPercent =
+    remainingPercent === null ? calculateUsedPercent(used, limit) : clampPercent(100 - remainingPercent);
   const primaryText =
     remainingPercent === null
-      ? `已用 ${formatPercent(calculatedUsedPercent)}`
+      ? `已用 ${formatPercent(usedPercent)}`
       : `剩余 ${formatPercent(remainingPercent)}`;
-  const usageText = calculatedUsedPercent === null ? '' : `已用 ${formatPercent(calculatedUsedPercent)}`;
+  const usageText = usedPercent === null ? '' : `已用 ${formatPercent(usedPercent)}`;
   const resetText = resetAt ? `重置 ${formatDate(resetAt)}` : '';
 
   return (
@@ -498,7 +493,7 @@ export function UserManagementPage() {
       </div>
 
       <div className={styles.tableWrap}>
-        <table className={styles.table}>
+        <table className={`${styles.table} clip-user-table`}>
           <thead>
             <tr>
               <th>用户名</th>
@@ -560,7 +555,6 @@ export function UserManagementPage() {
                         limit={row.limit_credits}
                         remaining={row.remaining_credits}
                         used={row.used_credits}
-                        usedPercent={row.primary_used_percent}
                         resetAt={row.primary_reset_at || row.reset_at}
                         unlimited={row.unlimited}
                       />
@@ -571,7 +565,6 @@ export function UserManagementPage() {
                         limit={row.weekly_limit_credits}
                         remaining={row.weekly_remaining_credits}
                         used={row.weekly_used_credits}
-                        usedPercent={row.official_weekly_used_percent ?? row.weekly_used_percent}
                         resetAt={row.weekly_reset_at}
                         unlimited={row.unlimited}
                       />
